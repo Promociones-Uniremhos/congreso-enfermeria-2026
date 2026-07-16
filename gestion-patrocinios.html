@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Patrocinios · Congreso Internacional de Enfermería 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#FBAD18; --gold-soft:#FFF6E1; --gold-deep:#B77E00;
+  --red:#ED1C24; --black:#1A1A1A; --ink:#2B2B2B; --grey:#6E6E6E;
+  --line:#EAE4D6; --paper:#FFFDF8; --white:#FFFFFF; --green:#1E8E3E;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); font-size:15px;}
+h1,h2,h3{font-family:'Poppins','Century Gothic',sans-serif; color:var(--black);}
+button{font-family:inherit; cursor:pointer;}
+.wrap{max-width:1100px; margin:0 auto; padding:0 18px;}
+
+/* header */
+header{background:var(--gold); color:var(--black); padding:22px 0 18px; border-bottom:4px solid var(--black);}
+header .wrap{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;}
+.brand h1{font-size:19px; color:var(--black); line-height:1.2;}
+.brand p{font-size:11.5px; color:#5C4508; margin-top:2px;}
+.brand .tag{color:var(--red); font-weight:600;}
+.head-actions{display:flex; gap:10px;}
+.btn{border:none; border-radius:3px; padding:10px 16px; font-weight:600; font-size:13px;}
+.btn-gold{background:var(--black); color:var(--gold);}
+.btn-gold:hover{background:#000;}
+.btn-ghost{background:transparent; color:var(--black); border:1.5px solid rgba(26,26,26,.45);}
+.btn-ghost:hover{border-color:var(--black); background:rgba(255,255,255,.35);}
+
+/* stats */
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:22px 0;}
+.stat{background:#fff; border:1px solid var(--line); border-radius:4px; padding:16px;}
+.stat .n{font-family:'Poppins',sans-serif; font-weight:800; font-size:26px; color:var(--black);}
+.stat.confirm .n{color:var(--green);}
+.stat .l{font-size:11.5px; color:var(--grey); margin-top:2px; letter-spacing:.02em;}
+
+/* pipeline bar */
+.pipe{background:#fff; border:1px solid var(--line); border-radius:4px; padding:16px; margin-bottom:22px;}
+.pipe h3{font-size:13px; margin-bottom:12px; letter-spacing:.03em;}
+.pipe-bar{display:flex; height:14px; border-radius:7px; overflow:hidden; background:var(--gold-soft);}
+.pipe-bar div{height:100%;}
+.pipe-leg{display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; font-size:11px; color:var(--grey);}
+.pipe-leg span{display:flex; align-items:center; gap:5px;}
+.pipe-leg i{width:10px; height:10px; border-radius:2px; display:inline-block;}
+
+/* filters */
+.filters{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+.filters input, .filters select{
+  border:1.5px solid var(--line); border-radius:3px; padding:10px 12px; font-family:inherit;
+  font-size:13.5px; background:#fff; color:var(--ink);
+}
+.filters input{flex:1; min-width:180px;}
+.filters input:focus,.filters select:focus{outline:2px solid var(--gold); border-color:var(--gold);}
+
+/* sector groups & cards */
+.sector-h{font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--gold-deep); margin:22px 0 10px; display:flex; align-items:center; gap:8px;}
+.sector-h::after{content:""; flex:1; height:1px; background:var(--line);}
+.sector-h .count{font-size:11px; color:var(--grey); font-weight:500; text-transform:none; letter-spacing:0;}
+.sector-info{background:var(--gold-soft); border-left:3px solid var(--gold); border-radius:0 4px 4px 0;
+  padding:9px 12px; margin-bottom:10px; font-size:11.5px; color:#6B5510; line-height:1.55;}
+.card{background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:4px;
+  padding:14px 16px; margin-bottom:10px; cursor:pointer; transition:box-shadow .15s;}
+.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.07);}
+.card.verify{border-left-color:#C9C3B4;}
+.card-top{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
+.card-top .name{font-weight:600; font-size:15px; color:var(--black);}
+.card-top .name small{font-weight:500; color:var(--grey); font-size:11px; margin-left:6px;}
+.chips{display:flex; gap:6px; flex-wrap:wrap;}
+.chip{font-size:10.5px; font-weight:600; padding:4px 10px; border-radius:12px; letter-spacing:.02em;}
+.chip.cat{background:var(--gold-soft); color:var(--gold-deep);}
+.chip.e0{background:#F1F1F1; color:#666;}
+.chip.e1{background:#E3F0FF; color:#1B5FAD;}
+.chip.e2{background:#E2F6E7; color:var(--green); font-weight:700;}
+.chip.e3{background:#F1F1F1; color:#999; text-decoration:line-through;}
+.card-sub{font-size:12px; color:var(--grey); margin-top:6px;}
+.empty-note{font-size:13px; color:var(--grey); font-style:italic; padding:8px 2px;}
+
+/* editor panel */
+.overlay{position:fixed; inset:0; background:rgba(20,16,8,.45); display:none; z-index:40;}
+.panel{position:fixed; top:0; right:0; bottom:0; width:min(430px,100%); background:#fff; z-index:50;
+  transform:translateX(102%); transition:transform .22s ease; display:flex; flex-direction:column;
+  box-shadow:-12px 0 40px rgba(0,0,0,.18);}
+.panel.open{transform:none;} .overlay.open{display:block;}
+.panel-h{background:var(--gold); color:var(--black); padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--black);}
+.panel-h h3{color:var(--black); font-size:15px;}
+.panel-h button{background:none; border:none; color:var(--black); font-size:20px;}
+.panel-b{padding:18px 20px; overflow-y:auto; flex:1;}
+.f{margin-bottom:13px;}
+.f label{display:block; font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--grey); margin-bottom:5px;}
+.f input,.f select,.f textarea{width:100%; border:1.5px solid var(--line); border-radius:3px; padding:9px 11px; font-family:inherit; font-size:13.5px;}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--gold); border-color:var(--gold);}
+.f textarea{resize:vertical; min-height:64px;}
+.f-row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.panel-f{padding:14px 20px; border-top:1px solid var(--line); display:flex; gap:10px; justify-content:space-between;}
+.btn-danger{background:none; border:none; color:var(--red); font-size:12.5px; font-weight:600;}
+.btn-black{background:var(--black); color:var(--gold);}
+.save-note{font-size:11px; color:var(--grey); text-align:center; padding:8px 16px 14px;}
+
+footer{margin:34px 0 26px; font-size:11px; color:#B5AF9F; text-align:center;}
+
+/* carta modal */
+.carta-wrap{position:fixed; inset:0; background:#3a3630; z-index:60; display:none; flex-direction:column;}
+.carta-wrap.open{display:flex;}
+.carta-bar{background:var(--black); color:#fff; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; font-size:12px;}
+.carta-bar div{display:flex; gap:8px;}
+.carta-page{flex:1; overflow-y:auto; padding:26px 14px;}
+.carta{background:#fff; max-width:760px; margin:0 auto; padding:60px 64px; font-family:Georgia,'Times New Roman',serif;
+  font-size:14.5px; line-height:1.75; color:#222; box-shadow:0 10px 40px rgba(0,0,0,.4); min-height:900px;}
+.carta:focus{outline:2px solid var(--gold);}
+.carta .c-head{border-bottom:3px solid var(--gold); padding-bottom:14px; margin-bottom:26px;}
+.carta .c-head strong{font-family:'Poppins',sans-serif; font-size:16px; letter-spacing:.04em;}
+.carta .c-head span{display:block; font-size:11px; color:#777; font-family:'Inter',sans-serif;}
+.carta p{margin-bottom:14px;}
+.carta .firma{margin-top:40px;}
+
+@media print{
+  body>*{display:none !important;}
+  .carta-wrap{display:block !important; position:static; background:#fff;}
+  .carta-bar{display:none !important;}
+  .carta-page{padding:0; overflow:visible;}
+  .carta{box-shadow:none; padding:20px 10px; max-width:none; min-height:0;}
+}
+
+@media(max-width:760px){
+  .carta{padding:30px 22px;}
+}
+
+@media(max-width:760px){
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .brand h1{font-size:16px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <h1>Gestión de Patrocinios <span class="tag">· Congreso Internacional de Enfermería 2026</span></h1>
+      <p>Departamento de Educación Continua y Promociones · UNIREMHOS</p>
+    </div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" onclick="exportCSV()">Exportar CSV</button>
+      <button class="btn btn-gold" onclick="openEditor()">+ Agregar empresa</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="n" id="stTotal">0</div><div class="l">Empresas identificadas</div></div>
+    <div class="stat"><div class="n" id="stGestion">0</div><div class="l">En gestión activa</div></div>
+    <div class="stat"><div class="n" id="stNego">0</div><div class="l">Contactadas</div></div>
+    <div class="stat confirm"><div class="n" id="stConf">0</div><div class="l">Van a patrocinar</div></div>
+  </div>
+
+  <div class="pipe">
+    <h3>PIPELINE DE GESTIÓN</h3>
+    <div class="pipe-bar" id="pipeBar"></div>
+    <div class="pipe-leg" id="pipeLeg"></div>
+  </div>
+
+  <div class="filters">
+    <input id="q" type="search" placeholder="Buscar empresa o contacto…" oninput="render()">
+    <select id="fSector" onchange="render()"><option value="">Todos los sectores</option></select>
+    <select id="fEstado" onchange="render()"><option value="">Todos los estados</option></select>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>Herramienta interna del Departamento de Promociones · Los datos se guardan en este navegador · Empresas marcadas “verificar” son sugerencias iniciales del mercado dominicano</footer>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeEditor()"></div>
+<div class="panel" id="panel">
+  <div class="panel-h"><h3 id="panelTitle">Agregar empresa</h3><button onclick="closeEditor()">×</button></div>
+  <div class="panel-b">
+    <div class="f"><label>Empresa / Institución</label><input id="eNombre"></div>
+    <div class="f"><label>Sector</label><select id="eSector"></select></div>
+    <div class="f-row">
+      <div class="f"><label>Persona de contacto</label><input id="eContacto"></div>
+      <div class="f"><label>Cargo</label><input id="eCargo"></div>
+    </div>
+    <div class="f-row">
+      <div class="f"><label>Teléfono</label><input id="eTel"></div>
+      <div class="f"><label>Correo</label><input id="eMail"></div>
+    </div>
+    <div class="f-row">
+      <div class="f"><label>Categoría propuesta</label><select id="eCat">
+        <option>Por definir</option><option>Oro</option><option>Plata</option><option>Bronce</option><option>Aliado Comercial</option></select></div>
+      <div class="f"><label>Estado de gestión</label><select id="eEstado"></select></div>
+    </div>
+    <div class="f"><label>Responsable</label><input id="eResp"></div>
+    <div class="f"><label>Próximo paso</label><input id="ePaso"></div>
+    <div class="f"><label>Notas</label><textarea id="eNotas"></textarea></div>
+  </div>
+  <div class="panel-f">
+    <button class="btn-danger" id="btnDelete" onclick="deleteRec()">Eliminar</button>
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-ghost" style="color:var(--black); border-color:var(--black);" onclick="openCarta()">Generar carta</button>
+      <button class="btn btn-black" onclick="saveRec()">Guardar</button>
+    </div>
+  </div>
+  <div class="save-note" id="saveNote"></div>
+</div>
+
+<!-- Letter modal -->
+<div class="carta-wrap" id="cartaWrap">
+  <div class="carta-bar">
+    <span>Carta de solicitud de patrocinio — edite el texto directamente si lo necesita</span>
+    <div>
+      <button class="btn btn-ghost" style="color:#fff; border-color:rgba(255,255,255,.5);" onclick="copyCarta()">Copiar texto</button>
+      <button class="btn btn-gold" onclick="window.print()">Imprimir / PDF</button>
+      <button class="btn btn-ghost" style="color:#fff; border-color:rgba(255,255,255,.5);" onclick="closeCarta()">Cerrar</button>
+    </div>
+  </div>
+  <div class="carta-page">
+    <div class="carta" id="cartaBody" contenteditable="true"></div>
+  </div>
+</div>
+
+<script>
+const SECTOR_CARTA = {
+  "Industria farmacéutica": "Para su empresa, el congreso representa una oportunidad de visibilidad directa frente a un público clínico calificado, con espacios de exhibición de productos, participación en conferencias y vinculación académica con los profesionales que prescriben, administran y recomiendan sus productos a diario.",
+  "Hospitales": "Para su institución, el congreso constituye un espacio de posicionamiento frente a la comunidad de enfermería del país, con oportunidades de participación académica y de reclutamiento de talento: los profesionales y estudiantes que asistirán son precisamente el personal que su institución forma y emplea.",
+  "Centros diagnósticos": "Para su centro, el congreso ofrece la posibilidad de promover sus servicios especializados, exhibir nuevas tecnologías, realizar jornadas de evaluación preventiva para los asistentes y promover sus programas de empleo y desarrollo profesional ante personal de enfermería especializado.",
+  "Centros de diálisis": "Para su centro, el congreso representa un punto de contacto directo con el personal de enfermería especializado que interviene en la atención de sus pacientes, con oportunidades de posicionamiento institucional y captación de talento.",
+  "Laboratorios clínicos": "Para su laboratorio, el congreso ofrece una plataforma de promoción institucional y exhibición de servicios ante la comunidad asistencial que interactúa a diario con el diagnóstico clínico.",
+  "Equipos médicos": "Para su empresa, el congreso es un espacio idóneo de exhibición comercial y demostración de equipos ante un público técnico que utiliza y recomienda estas soluciones en su práctica diaria.",
+  "Tecnología médica": "Para su empresa, el congreso ofrece la oportunidad de presentar sus soluciones tecnológicas ante los usuarios finales del sistema de salud, en un espacio dedicado a la innovación en el cuidado.",
+  "Uniformes médicos": "Para su marca, el congreso reúne en un solo lugar a su cliente exacto: profesionales y estudiantes de enfermería, con oportunidades de exhibición comercial y venta directa durante los dos días del evento.",
+  "Calzado médico": "Para su marca, el congreso reúne en un solo lugar a su cliente exacto: profesionales de la salud que pasan largas jornadas de pie, con oportunidades de exhibición comercial y venta directa durante el evento.",
+  "Instrumental médico": "Para su empresa, el congreso es una vitrina de exhibición ante el personal clínico que utiliza instrumental médico en su práctica diaria.",
+  "Bancos": "Para su institución, el congreso representa una oportunidad de vinculación con un segmento profesional en crecimiento, a través de programas de responsabilidad social, financiamiento educativo y productos dirigidos al sector salud.",
+  "Cooperativas": "Para su cooperativa, el congreso ofrece un espacio de vinculación con profesionales y estudiantes del sector salud, afín a su misión de apoyo al desarrollo de sus asociados.",
+  "ARS": "Para su administradora, el congreso representa una oportunidad de posicionamiento institucional ante los profesionales que forman parte esencial del sistema de salud dominicano.",
+  "Universidades": "Para su institución, el congreso ofrece oportunidades de difusión académica, promoción de programas de formación continua y construcción de alianzas interinstitucionales.",
+  "Editoriales": "Para su editorial, el congreso es un espacio natural de difusión de contenido técnico y académico ante una audiencia especializada en el cuidado de la salud.",
+  "Empresas de bienestar": "Para su empresa, el congreso conecta directamente con el eje temático del evento: el cuidado integral de la salud, ante una audiencia profesional y receptiva.",
+  "Empresas de software para salud": "Para su empresa, el congreso ofrece la oportunidad de presentar sus soluciones ante los usuarios finales de los sistemas de información en salud.",
+  "Organizaciones e instituciones públicas": "Para su institución, el congreso representa una oportunidad de respaldar el fortalecimiento profesional de la enfermería dominicana, mediante su aval institucional y participación académica.",
+};
+
+const SECTORES = ["Industria farmacéutica","Hospitales","Centros diagnósticos","Centros de diálisis","Laboratorios clínicos","Equipos médicos","Tecnología médica","Uniformes médicos","Calzado médico","Instrumental médico","Bancos","Cooperativas","ARS","Universidades","Editoriales","Empresas de bienestar","Empresas de software para salud","Organizaciones e instituciones públicas"];
+const ESTADOS = ["Sin contactar","Contactado","Va a patrocinar","No le interesa"];
+const ECOLORS = ["#CFCFCF","#5C93E6","#1E8E3E","#B9B9B9"];
+
+const SECTOR_INFO = {
+  "Industria farmacéutica": { objetivo:"Patrocinio financiero, conferencias, exhibición de productos y apoyo académico.", modalidades:"Patrocinio · Conferencias · Exhibición de productos · Apoyo académico" },
+  "Hospitales": { objetivo:"Participación académica, patrocinio y reclutamiento de talento de enfermería.", modalidades:"Patrocinio institucional · Stand de reclutamiento · Vacantes, residencias y programas de desarrollo" },
+  "Centros diagnósticos": { objetivo:"Patrocinio, posicionamiento institucional, promoción de servicios especializados, captación de talento y exhibición de nuevas tecnologías.", modalidades:"Patrocinio institucional · Stand de servicios diagnósticos · Charlas sobre innovación · Jornadas de evaluación preventiva · Promoción de empleo" },
+  "Laboratorios clínicos": { objetivo:"Patrocinio, exhibición y promoción institucional.", modalidades:"Patrocinio · Stand · Promoción institucional" },
+  "Equipos médicos": { objetivo:"Exhibición comercial, demostraciones y patrocinio.", modalidades:"Exhibición comercial · Demostraciones de equipos · Patrocinio" },
+  "Tecnología médica": { objetivo:"Exhibición de soluciones tecnológicas para el sector salud.", modalidades:"Exhibición · Demostraciones · Charlas de innovación" },
+  "Uniformes médicos": { objetivo:"Exhibición comercial y venta directa.", modalidades:"Stand comercial · Venta directa durante el congreso" },
+  "Calzado médico": { objetivo:"Exhibición comercial y venta directa.", modalidades:"Stand comercial · Venta directa durante el congreso" },
+  "ARS": { objetivo:"Patrocinio y posicionamiento institucional.", modalidades:"Patrocinio · Posicionamiento de marca" },
+  "Universidades": { objetivo:"Difusión, becas y programas de formación continua.", modalidades:"Difusión · Becas · Alianzas académicas" },
+  "Organizaciones e instituciones públicas": { objetivo:"Apoyo y aval institucional al congreso.", modalidades:"Aval institucional · Participación académica · Difusión oficial" }
+};
+
+const SEED = [
+  // 1. Industria farmacéutica
+  ["Industria farmacéutica","Ethical Pharmaceutical"],
+  ["Industria farmacéutica","Acromax Dominicana"],
+  ["Industria farmacéutica","Laboratorios Rowe"],
+  ["Industria farmacéutica","Laboratorios LAM"],
+  ["Industria farmacéutica","Laboratorio San Luis"],
+  ["Industria farmacéutica","Megalabs"],
+  ["Industria farmacéutica","Abbott"],
+  ["Industria farmacéutica","Medifarma"],
+  ["Industria farmacéutica","Ameripharma"],
+  ["Industria farmacéutica","Magnachem"],
+  // 2. Equipos e insumos médicos
+  ["Equipos médicos","BP Medical"],
+  ["Equipos médicos","Insumed"],
+  ["Equipos médicos","Caribbean Equipment Medical (CEM)"],
+  ["Equipos médicos","Distribuidores de bombas de infusión","Tipo de proveedor por identificar."],
+  ["Equipos médicos","Monitores de signos vitales","Tipo de proveedor por identificar."],
+  ["Equipos médicos","Equipos hospitalarios","Tipo de proveedor por identificar."],
+  ["Equipos médicos","Material quirúrgico","Tipo de proveedor por identificar."],
+  ["Equipos médicos","Equipos de protección personal","Tipo de proveedor por identificar."],
+  // 3. Laboratorios clínicos
+  ["Laboratorios clínicos","Referencia Laboratorio Clínico","También en lista de centros de diagnóstico e imágenes."],
+  ["Laboratorios clínicos","Amadita Laboratorio Clínico","También en lista de centros de diagnóstico e imágenes."],
+  ["Laboratorios clínicos","Evolab"],
+  ["Laboratorios clínicos","The Lab Clinical Laboratory"],
+  // 4. Hospitales y centros de salud
+  ["Hospitales","CEDIMAT","También aplica como centro de diagnóstico e imágenes."],
+  ["Hospitales","Hospital General de la Plaza de la Salud"],
+  ["Hospitales","HOMS – Hospital Metropolitano de Santiago"],
+  ["Hospitales","Hospiten Santo Domingo"],
+  ["Hospitales","Hospiten Bávaro"],
+  ["Hospitales","Centro Médico Punta Cana"],
+  ["Hospitales","Central Romana Medical Center"],
+  // Centros de diagnóstico e imágenes
+  ["Centros diagnósticos","CENTRIMED"],
+  ["Centros diagnósticos","RADNET Centro Diagnóstico e Imágenes"],
+  ["Centros diagnósticos","CADI – Centro Avanzado de Diagnóstico e Imagen"],
+  ["Centros diagnósticos","CEDOMIR"],
+  ["Centros diagnósticos","ECOMEDICC"],
+  ["Centros diagnósticos","RIA Diagnostic Center"],
+  // 5. ARS
+  ["ARS","ARS SeNaSa"],
+  ["ARS","ARS Humano"],
+  ["ARS","ARS Universal"],
+  ["ARS","MAPFRE Salud ARS"],
+  ["ARS","ARS Monumental"],
+  // 6. Uniformes, calzado y accesorios
+  ["Uniformes médicos","Batisa"],
+  ["Uniformes médicos","Distribuidores de Cherokee","Identificar distribuidor local."],
+  ["Uniformes médicos","Distribuidores de Dickies Medical","Identificar distribuidor local."],
+  ["Uniformes médicos","Healing Hands"],
+  ["Uniformes médicos","Empresas locales de uniformes médicos","Por identificar."],
+  ["Calzado médico","Skechers Work","Identificar distribuidor local."],
+  // 7. Tecnología para el sector salud
+  ["Tecnología médica","Sistemas de Expediente Clínico Electrónico","Tipo de proveedor por identificar."],
+  ["Tecnología médica","Software hospitalario","Tipo de proveedor por identificar."],
+  ["Tecnología médica","Plataformas de educación médica","Tipo de proveedor por identificar."],
+  ["Tecnología médica","Empresas de telemedicina","Tipo de proveedor por identificar."],
+  // 8. Universidades e instituciones académicas
+  ["Universidades","Escuelas de Enfermería","Por identificar según alianzas."],
+  ["Universidades","Instituciones de educación continua","Por identificar según alianzas."],
+  // 9. Organizaciones e instituciones públicas
+  ["Organizaciones e instituciones públicas","Ministerio de Salud Pública"],
+  ["Organizaciones e instituciones públicas","Servicio Nacional de Salud (SNS)"],
+  ["Organizaciones e instituciones públicas","Colegio Dominicano de Profesionales de Enfermería"],
+  ["Organizaciones e instituciones públicas","Asociaciones y sociedades científicas de enfermería","Por identificar."],
+  // Banca y cooperativas (sugerencias iniciales, verificar)
+  ["Bancos","Banreservas",null,1],["Bancos","Banco Popular Dominicano",null,1],["Bancos","Banco BHD",null,1],
+  ["Cooperativas","COOPNAMA",null,1],
+].map((r,i)=>({id:"seed"+i, sector:r[0], nombre:r[1], verificar:!!r[3], contacto:"",cargo:"",tel:"",mail:"",cat:"Por definir",estado:"Sin contactar",resp:"",paso:"",notas:r[2]||""}));
+
+let data = null, editingId = null;
+const KEY = "patrocinios_enfermeria_2026_v5";
+
+function loadData(){
+  try{ const raw = localStorage.getItem(KEY); if(raw){ data = JSON.parse(raw); return; } }catch(e){}
+  data = SEED.slice();
+}
+function persist(){
+  try{ localStorage.setItem(KEY, JSON.stringify(data)); document.getElementById('saveNote').textContent=""; }
+  catch(e){ document.getElementById('saveNote').textContent="Vista previa: los cambios no se guardan aquí; sí se guardarán al abrir el archivo en el navegador."; }
+}
+
+function initSelectors(){
+  const fs=document.getElementById('fSector'), fe=document.getElementById('fEstado'),
+        es=document.getElementById('eSector'), ee=document.getElementById('eEstado');
+  SECTORES.forEach(s=>{ fs.add(new Option(s,s)); es.add(new Option(s,s)); });
+  ESTADOS.forEach(s=>{ fe.add(new Option(s,s)); ee.add(new Option(s,s)); });
+}
+
+function stats(){
+  const total=data.length;
+  const gestion=data.filter(d=>!["Sin contactar","No le interesa"].includes(d.estado)).length;
+  const nego=data.filter(d=>d.estado==="Contactado").length;
+  const conf=data.filter(d=>d.estado==="Va a patrocinar").length;
+  stTotal.textContent=total; stGestion.textContent=gestion; stNego.textContent=nego; stConf.textContent=conf;
+  // pipeline bar
+  const bar=document.getElementById('pipeBar'), leg=document.getElementById('pipeLeg');
+  bar.innerHTML=""; leg.innerHTML="";
+  ESTADOS.forEach((e,i)=>{
+    const n=data.filter(d=>d.estado===e).length;
+    if(n>0){ const seg=document.createElement('div'); seg.style.width=(n/total*100)+"%"; seg.style.background=ECOLORS[i]; seg.title=`${e}: ${n}`; bar.appendChild(seg); }
+    leg.innerHTML+=`<span><i style="background:${ECOLORS[i]}"></i>${e} (${n})</span>`;
+  });
+}
+
+function render(){
+  stats();
+  const q=document.getElementById('q').value.toLowerCase();
+  const fs=document.getElementById('fSector').value, fe=document.getElementById('fEstado').value;
+  const list=document.getElementById('list'); list.innerHTML="";
+  SECTORES.forEach(sec=>{
+    if(fs && fs!==sec) return;
+    const items=data.filter(d=>d.sector===sec)
+      .filter(d=>!fe||d.estado===fe)
+      .filter(d=>!q||d.nombre.toLowerCase().includes(q)||(d.contacto||"").toLowerCase().includes(q));
+    if(fs==="" && items.length===0 && (q||fe)) return;
+    const h=document.createElement('div'); h.className="sector-h";
+    h.innerHTML=`${sec} <span class="count">${items.length} empresa${items.length!==1?"s":""}</span>`;
+    list.appendChild(h);
+    const info = SECTOR_INFO[sec];
+    if(info){
+      const inf=document.createElement('div'); inf.className="sector-info";
+      inf.innerHTML=`<strong>Objetivo:</strong> ${info.objetivo}<br><strong>Modalidades:</strong> ${info.modalidades}`;
+      list.appendChild(inf);
+    }
+    if(items.length===0){ const p=document.createElement('div'); p.className="empty-note"; p.textContent="Sin empresas aún — toque “+ Agregar empresa”."; list.appendChild(p); return; }
+    items.forEach(d=>{
+      const ei=ESTADOS.indexOf(d.estado);
+      const c=document.createElement('div'); c.className="card"+(d.verificar?" verify":""); c.onclick=()=>openEditor(d.id);
+      c.innerHTML=`<div class="card-top">
+          <div class="name">${d.nombre}${d.verificar?'<small>verificar datos</small>':''}</div>
+          <div class="chips">
+            ${d.cat && d.cat!=="Por definir" ? `<span class="chip cat">${d.cat}</span>`:""}
+            <span class="chip e${ei}">${d.estado}</span>
+          </div>
+        </div>
+        ${(d.contacto||d.paso)?`<div class="card-sub">${d.contacto?("👤 "+d.contacto+(d.cargo?" · "+d.cargo:"")):""}${d.contacto&&d.paso?"  ·  ":""}${d.paso?("→ "+d.paso):""}</div>`:""}`;
+      list.appendChild(c);
+    });
+  });
+}
+
+function openEditor(id){
+  editingId=id||null;
+  const d = id ? data.find(x=>x.id===id) : {sector:SECTORES[0],nombre:"",contacto:"",cargo:"",tel:"",mail:"",cat:"Por definir",estado:"Sin contactar",resp:"",paso:"",notas:""};
+  panelTitle.textContent = id ? "Editar empresa" : "Agregar empresa";
+  eNombre.value=d.nombre; eSector.value=d.sector; eContacto.value=d.contacto; eCargo.value=d.cargo;
+  eTel.value=d.tel; eMail.value=d.mail; eCat.value=d.cat; eEstado.value=d.estado;
+  eResp.value=d.resp; ePaso.value=d.paso; eNotas.value=d.notas;
+  btnDelete.style.visibility = id ? "visible" : "hidden";
+  panel.classList.add('open'); overlay.classList.add('open');
+}
+function closeEditor(){ panel.classList.remove('open'); overlay.classList.remove('open'); }
+
+function saveRec(){
+  const nombre=eNombre.value.trim(); if(!nombre){ eNombre.focus(); return; }
+  const rec={ sector:eSector.value, nombre, contacto:eContacto.value.trim(), cargo:eCargo.value.trim(),
+    tel:eTel.value.trim(), mail:eMail.value.trim(), cat:eCat.value, estado:eEstado.value,
+    resp:eResp.value.trim(), paso:ePaso.value.trim(), notas:eNotas.value.trim() };
+  if(editingId){ const d=data.find(x=>x.id===editingId); Object.assign(d, rec); if(rec.contacto||rec.tel||rec.mail) d.verificar=false; }
+  else{ data.push(Object.assign({id:"c"+Date.now(), verificar:false}, rec)); }
+  persist(); closeEditor(); render();
+}
+function deleteRec(){
+  if(!editingId) return;
+  if(!confirm("¿Eliminar esta empresa del listado?")) return;
+  data=data.filter(x=>x.id!==editingId); persist(); closeEditor(); render();
+}
+
+function exportCSV(){
+  const cols=["Sector","Empresa","Contacto","Cargo","Teléfono","Correo","Categoría","Estado","Responsable","Próximo paso","Notas"];
+  const rows=data.map(d=>[d.sector,d.nombre,d.contacto,d.cargo,d.tel,d.mail,d.cat,d.estado,d.resp,d.paso,d.notas]);
+  const esc=v=>'"'+String(v||"").replace(/"/g,'""')+'"';
+  const csv="\uFEFF"+[cols,...rows].map(r=>r.map(esc).join(",")).join("\n");
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  a.download="Listado_Patrocinios_Congreso_Enfermeria.csv"; a.click();
+}
+
+function openCarta(){
+  const sector = eSector.value;
+  const empresa = eNombre.value.trim() || "[Nombre de la empresa]";
+  const contacto = eContacto.value.trim() || "[Nombre del contacto]";
+  const cargo = eCargo.value.trim();
+  const parr = SECTOR_CARTA[sector] || "Para su organización, el congreso representa una oportunidad de posicionamiento institucional ante la comunidad de enfermería del país.";
+  const hoy = new Date().toLocaleDateString('es-DO', {day:'numeric', month:'long', year:'numeric'});
+  document.getElementById('cartaBody').innerHTML = `
+    <div class="c-head"><strong>UNIVERSIDAD EUGENIO MARÍA DE HOSTOS · UNIREMHOS</strong>
+    <span>Departamento de Educación Continua y Promociones</span></div>
+    <p style="text-align:right;">Santo Domingo, R.D.<br>${hoy}</p>
+    <p><strong>Señores</strong><br><strong>${empresa}</strong><br>Ciudad.</p>
+    <p><strong>Atención:</strong> ${contacto}${cargo ? " · " + cargo : ""}</p>
+    <p>Distinguidos señores:</p>
+    <p>Reciban un cordial saludo de la Universidad Eugenio María de Hostos (UNIREMHOS). Nos complace invitarles a formar parte del <strong>Congreso Internacional de Enfermería 2026: “Innovación y Buenas Prácticas en la Formación y el Cuidado Profesional”</strong>, organizado junto a la Universidad UFHEC, que se celebrará los días <strong>3 y 4 de septiembre de 2026</strong> en el Auditorio Dorothy Van Vleet del Campus Metropolitano UFHEC, en Santo Domingo.</p>
+    <p>El congreso reunirá a profesionales de enfermería, investigadores, docentes, estudiantes y representantes del sector salud, con conferencias magistrales, simposios temáticos, presentación de trabajos científicos y paneles con expertos nacionales e internacionales.</p>
+    <p>${parr}</p>
+    <p>Contamos con distintas categorías de patrocinio —Oro, Plata, Bronce y Aliado Comercial— así como espacios de exhibición y modalidades de aporte en especie, que con gusto podemos presentarles en detalle. Toda la información está disponible además en nuestro portal digital de patrocinadores.</p>
+    <p>Agradecemos de antemano su consideración y quedamos a su disposición para coordinar una reunión.</p>
+    <p class="firma">Atentamente,<br><br><br>_______________________________<br>Departamento de Educación Continua y Promociones<br>Universidad Eugenio María de Hostos (UNIREMHOS)<br>congresoenfermeria@uniremhos.edu.do</p>`;
+  document.getElementById('cartaWrap').classList.add('open');
+}
+function closeCarta(){ document.getElementById('cartaWrap').classList.remove('open'); }
+function copyCarta(){
+  const t = document.getElementById('cartaBody').innerText;
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t); }
+  else{ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+}
+
+loadData(); initSelectors(); render();
+</script>
+</body>
+</html>
