@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrar patrocinador · Congreso Internacional de Enfermería 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#FBAD18; --gold-soft:#FFF6E1; --gold-deep:#B77E00;
+  --red:#ED1C24; --black:#1A1A1A; --ink:#2B2B2B; --grey:#6E6E6E;
+  --line:#EAE4D6; --paper:#FFFDF8; --white:#FFFFFF; --green:#1E8E3E;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); font-size:15px; min-height:100vh;}
+h1,h2{font-family:'Poppins','Century Gothic',sans-serif; color:var(--black);}
+.wrap{max-width:560px; margin:0 auto; padding:0 20px;}
+
+header{background:var(--gold); color:var(--black); padding:26px 0 22px; border-bottom:4px solid var(--black);}
+header .kick{font-family:'Poppins',sans-serif; font-weight:600; font-size:11px; letter-spacing:.16em; color:var(--red);}
+header h1{font-size:22px; margin-top:5px; line-height:1.15;}
+header p{font-size:12.5px; color:#5C4508; margin-top:4px;}
+
+.card{background:#fff; border:1px solid var(--line); border-radius:6px; padding:26px; margin:26px 0; box-shadow:0 4px 18px rgba(0,0,0,.04);}
+.intro{font-size:13.5px; color:var(--grey); margin-bottom:22px; line-height:1.55;}
+.f{margin-bottom:15px;}
+.f label{display:block; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--grey); margin-bottom:6px;}
+.f label .req{color:var(--red);}
+.f input,.f select,.f textarea{width:100%; border:1.5px solid var(--line); border-radius:4px; padding:11px 13px; font-family:inherit; font-size:14.5px; color:var(--ink); background:#fff;}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--gold); border-color:var(--gold);}
+.f textarea{resize:vertical; min-height:70px;}
+.f-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.btn{width:100%; border:none; border-radius:4px; padding:14px; font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; background:var(--black); color:var(--gold); cursor:pointer; margin-top:6px;}
+.btn:hover{background:#000;}
+.btn:disabled{opacity:.6; cursor:default;}
+.msg{margin-top:16px; padding:13px 16px; border-radius:4px; font-size:13.5px; display:none;}
+.msg.ok{display:block; background:#E2F6E7; color:var(--green); border-left:3px solid var(--green);}
+.msg.err{display:block; background:#FFE9E9; color:#B33; border-left:3px solid var(--red);}
+footer{text-align:center; font-size:11px; color:#B5AF9F; padding-bottom:30px; line-height:1.6;}
+@media(max-width:520px){ .f-row{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kick">DEPARTAMENTO DE PROMOCIONES · UNIREMHOS</div>
+    <h1>Registrar patrocinador potencial</h1>
+    <p>Congreso Internacional de Enfermería 2026</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <p class="intro">¿Identificaste una empresa o institución que podría patrocinar el congreso? Regístrala aquí. Los datos llegan directamente al equipo de gestión del Departamento de Promociones.</p>
+
+    <form id="frm" onsubmit="return enviar(event)">
+      <div class="f">
+        <label>Empresa / Institución <span class="req">*</span></label>
+        <input id="nombre" required>
+      </div>
+      <div class="f">
+        <label>Sector <span class="req">*</span></label>
+        <select id="sector" required></select>
+      </div>
+      <div class="f-row">
+        <div class="f"><label>Persona de contacto</label><input id="contacto"></div>
+        <div class="f"><label>Cargo</label><input id="cargo"></div>
+      </div>
+      <div class="f-row">
+        <div class="f"><label>Teléfono</label><input id="tel"></div>
+        <div class="f"><label>Correo</label><input id="mail" type="email"></div>
+      </div>
+      <div class="f">
+        <label>Estado de contacto</label>
+        <select id="estado">
+          <option>Sin contactar</option>
+          <option>Contactado</option>
+          <option>Va a patrocinar</option>
+          <option>No le interesa</option>
+        </select>
+      </div>
+      <div class="f">
+        <label>Notas / observaciones</label>
+        <textarea id="notas" placeholder="Cómo se identificó, con quién hablar, próximos pasos…"></textarea>
+      </div>
+      <div class="f">
+        <label>Registrado por</label>
+        <input id="resp" placeholder="Su nombre">
+      </div>
+      <button type="submit" class="btn" id="btn">Registrar patrocinador</button>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+</div>
+
+<footer class="wrap">
+  Formulario interno del Departamento de Promociones · Los registros se consolidan en la base del equipo.
+</footer>
+
+<script>
+// ====== CONEXIÓN ======
+// Pega aquí la MISMA URL /exec del Apps Script de gestión:
+const API_URL = "PEGA_AQUI_URL_DEL_SCRIPT_DE_GESTION";
+
+const SECTORES = ["Industria farmacéutica","Hospitales","Centros diagnósticos","Centros de diálisis","Laboratorios clínicos","Equipos médicos","Tecnología médica","Uniformes médicos","Calzado médico","Instrumental médico","Bancos","Cooperativas","ARS","Universidades","Editoriales","Empresas de bienestar","Empresas de software para salud","Organizaciones e instituciones públicas"];
+const sel=document.getElementById('sector');
+SECTORES.forEach(s=>sel.add(new Option(s,s)));
+
+function enviar(e){
+  e.preventDefault();
+  const btn=document.getElementById('btn'), msg=document.getElementById('msg');
+  const nombre=document.getElementById('nombre').value.trim();
+  if(!nombre){ return false; }
+
+  const payload={
+    accion:"add",
+    sector:document.getElementById('sector').value,
+    nombre:nombre,
+    contacto:document.getElementById('contacto').value.trim(),
+    cargo:document.getElementById('cargo').value.trim(),
+    tel:document.getElementById('tel').value.trim(),
+    mail:document.getElementById('mail').value.trim(),
+    cat:"Por definir",
+    estado:document.getElementById('estado').value,
+    resp:document.getElementById('resp').value.trim(),
+    paso:"",
+    notas:document.getElementById('notas').value.trim()
+  };
+
+  if(API_URL.indexOf("PEGA_AQUI")===0){
+    msg.className="msg err"; msg.textContent="Formulario en configuración. Contacte al Departamento de Promociones.";
+    return false;
+  }
+
+  btn.disabled=true; btn.textContent="Registrando…"; msg.className="msg"; msg.style.display="none";
+
+  fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
+    .then(()=>{
+      msg.className="msg ok"; msg.textContent="✓ ¡Registrado! Gracias por aportar. El equipo de gestión lo revisará.";
+      document.getElementById('frm').reset();
+    })
+    .catch(()=>{ msg.className="msg err"; msg.textContent="No se pudo registrar. Intente de nuevo o avise al Departamento."; })
+    .finally(()=>{ btn.disabled=false; btn.textContent="Registrar patrocinador"; });
+  return false;
+}
+</script>
+</body>
+</html>

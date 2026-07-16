@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avance de Patrocinios · Congreso Internacional de Enfermería 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#FBAD18; --gold-soft:#FFF6E1; --gold-deep:#B77E00;
+  --red:#ED1C24; --black:#1A1A1A; --ink:#2B2B2B; --grey:#6E6E6E;
+  --line:#EAE4D6; --paper:#FFFDF8; --white:#FFFFFF; --green:#1E8E3E; --blue:#1D5DC9;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); font-size:15px;}
+h1,h2,h3{font-family:'Poppins','Century Gothic',sans-serif; color:var(--black);}
+.wrap{max-width:1080px; margin:0 auto; padding:0 20px;}
+
+/* header */
+header{background:var(--gold); color:var(--black); padding:26px 0 22px; border-bottom:4px solid var(--black);}
+header .wrap{display:flex; justify-content:space-between; align-items:flex-end; gap:14px; flex-wrap:wrap;}
+.h-title .kick{font-family:'Poppins',sans-serif; font-weight:600; font-size:11px; letter-spacing:.16em; color:var(--red);}
+.h-title h1{font-size:23px; margin-top:4px; line-height:1.15;}
+.h-title p{font-size:12px; color:#5C4508; margin-top:3px;}
+.h-updated{font-size:11.5px; color:#5C4508; text-align:right;}
+.h-updated strong{display:block; font-family:'Poppins',sans-serif; font-size:13px; color:var(--black);}
+
+/* kpis */
+.kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:26px 0;}
+.kpi{background:#fff; border:1px solid var(--line); border-radius:5px; padding:20px; border-top:4px solid var(--gold);}
+.kpi.green{border-top-color:var(--green);}
+.kpi.blue{border-top-color:var(--blue);}
+.kpi.grey{border-top-color:#C9C3B4;}
+.kpi .n{font-family:'Poppins',sans-serif; font-weight:800; font-size:34px; color:var(--black); line-height:1;}
+.kpi.green .n{color:var(--green);}
+.kpi .l{font-size:12px; color:var(--grey); margin-top:8px; letter-spacing:.02em;}
+
+/* panels */
+.panel{background:#fff; border:1px solid var(--line); border-radius:5px; padding:22px; margin-bottom:20px;}
+.panel h2{font-size:14px; letter-spacing:.03em; margin-bottom:16px; display:flex; align-items:center; gap:8px;}
+.panel h2::before{content:""; width:14px; height:14px; background:var(--gold); border-radius:3px;}
+
+/* funnel */
+.funnel-row{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+.funnel-row .lbl{width:130px; font-size:13px; font-weight:600; color:var(--ink); flex-shrink:0;}
+.funnel-row .bar{flex:1; background:var(--gold-soft); border-radius:5px; height:26px; overflow:hidden;}
+.funnel-row .bar span{display:block; height:100%; border-radius:5px; transition:width .6s;}
+.funnel-row .val{width:38px; text-align:right; font-family:'Poppins',sans-serif; font-weight:700; font-size:14px;}
+
+/* two-col */
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+/* sector list */
+.sec-item{display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
+.sec-item:last-child{border-bottom:none;}
+.sec-item .bar2{flex:1; margin:0 12px; height:7px; background:#F0ECE2; border-radius:4px; overflow:hidden;}
+.sec-item .bar2 span{display:block; height:100%; background:var(--gold);}
+.sec-item .c{font-family:'Poppins',sans-serif; font-weight:700; min-width:24px; text-align:right;}
+/* confirmed list */
+.conf-item{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
+.conf-item:last-child{border-bottom:none;}
+.conf-item .cat{font-size:11px; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--gold-soft); color:var(--gold-deep);}
+.empty{color:var(--grey); font-style:italic; font-size:13px; padding:6px 0;}
+
+.loading{text-align:center; padding:60px 20px; color:var(--grey);}
+footer{margin:30px 0; font-size:11px; color:#B5AF9F; text-align:center; line-height:1.6;}
+
+@media(max-width:760px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .cols{grid-template-columns:1fr;}
+  .funnel-row .lbl{width:104px; font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="h-title">
+      <div class="kick">DEPARTAMENTO DE PROMOCIONES · UNIREMHOS</div>
+      <h1>Avance de Gestión de Patrocinios</h1>
+      <p>Congreso Internacional de Enfermería 2026</p>
+    </div>
+    <div class="h-updated">Actualizado<strong id="updated">—</strong></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="content" class="loading">Cargando datos de gestión…</div>
+</div>
+
+<footer class="wrap">
+  Panel de solo lectura · Departamento de Educación Continua y Promociones<br>
+  Los datos reflejan el estado de la gestión comercial al momento de la última actualización.
+</footer>
+
+<script>
+// ====== FUENTE DE DATOS ======
+// Pega aquí la URL CSV de tu Google Sheet publicada (Archivo → Compartir → Publicar en la web → CSV):
+const SHEET_CSV = "PEGA_AQUI_URL_CSV";
+
+const ESTADOS = ["Sin contactar","Contactado","Va a patrocinar","No le interesa"];
+const ECOLOR = {"Sin contactar":"#CFCFCF","Contactado":"#5C93E6","Va a patrocinar":"#1E8E3E","No le interesa":"#B9B9B9"};
+
+function parseCSV(text){
+  const rows=[]; let row=[], cur="", q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else{ if(c==='"')q=true; else if(c===','){row.push(cur);cur="";} else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur="";} else if(c!=='\r')cur+=c; }
+  }
+  if(cur||row.length){row.push(cur);rows.push(row);}
+  return rows.filter(r=>r.some(c=>c.trim()));
+}
+
+function col(headers, names){
+  for(const n of names){ const i=headers.findIndex(h=>h.toLowerCase().trim()===n); if(i>=0)return i; }
+  return -1;
+}
+
+function render(records){
+  const total=records.length;
+  const counts={}; ESTADOS.forEach(e=>counts[e]=0);
+  records.forEach(r=>{ if(counts[r.estado]!==undefined)counts[r.estado]++; });
+  const contactadas=counts["Contactado"]+counts["Va a patrocinar"]+counts["No le interesa"];
+  const patrocinan=counts["Va a patrocinar"];
+  const enGestion=counts["Contactado"]+counts["Va a patrocinar"];
+
+  // sectors
+  const secMap={};
+  records.forEach(r=>{ if(r.sector){ secMap[r.sector]=(secMap[r.sector]||0)+1; } });
+  const secSorted=Object.entries(secMap).sort((a,b)=>b[1]-a[1]);
+  const secMax=Math.max(1,...secSorted.map(s=>s[1]));
+
+  // confirmed
+  const confirmed=records.filter(r=>r.estado==="Va a patrocinar");
+
+  let html=`
+  <div class="kpis">
+    <div class="kpi"><div class="n">${total}</div><div class="l">Empresas identificadas</div></div>
+    <div class="kpi blue"><div class="n">${contactadas}</div><div class="l">Contactadas</div></div>
+    <div class="kpi grey"><div class="n">${enGestion}</div><div class="l">En gestión activa</div></div>
+    <div class="kpi green"><div class="n">${patrocinan}</div><div class="l">Van a patrocinar</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Embudo de gestión</h2>
+    ${ESTADOS.map(e=>{
+      const n=counts[e]; const pct=total?Math.round(n/total*100):0;
+      return `<div class="funnel-row"><div class="lbl">${e}</div><div class="bar"><span style="width:${pct}%; background:${ECOLOR[e]}"></span></div><div class="val">${n}</div></div>`;
+    }).join("")}
+  </div>
+
+  <div class="cols">
+    <div class="panel">
+      <h2>Empresas por sector</h2>
+      ${secSorted.length? secSorted.map(([s,c])=>`
+        <div class="sec-item"><span>${s}</span><div class="bar2"><span style="width:${c/secMax*100}%"></span></div><span class="c">${c}</span></div>
+      `).join("") : '<div class="empty">Sin datos.</div>'}
+    </div>
+    <div class="panel">
+      <h2>Confirmados para patrocinar</h2>
+      ${confirmed.length? confirmed.map(r=>`
+        <div class="conf-item"><span>${r.nombre}</span>${r.cat&&r.cat!=="Por definir"?`<span class="cat">${r.cat}</span>`:""}</div>
+      `).join("") : '<div class="empty">Aún no hay patrocinadores confirmados. La gestión está en curso.</div>'}
+    </div>
+  </div>`;
+  document.getElementById('content').innerHTML=html;
+  document.getElementById('updated').textContent=new Date().toLocaleDateString('es-DO',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function load(){
+  if(SHEET_CSV.indexOf("PEGA_AQUI")===0){
+    document.getElementById('content').innerHTML='<div class="loading">Panel en configuración. Conecte la fuente de datos (Google Sheet) para ver el avance.</div>';
+    return;
+  }
+  fetch(SHEET_CSV).then(r=>r.text()).then(text=>{
+    const rows=parseCSV(text);
+    if(rows.length<2){ document.getElementById('content').innerHTML='<div class="loading">La hoja no tiene datos aún.</div>'; return; }
+    const headers=rows[0];
+    const iSector=col(headers,["sector"]);
+    const iNombre=col(headers,["empresa","empresa/institución","empresa / institución","nombre"]);
+    const iEstado=col(headers,["estado","estado de gestión"]);
+    const iCat=col(headers,["categoría","categoría propuesta","categoria"]);
+    const records=rows.slice(1).map(r=>({
+      sector:(iSector>=0?r[iSector]:"").trim(),
+      nombre:(iNombre>=0?r[iNombre]:"").trim(),
+      estado:(iEstado>=0?r[iEstado]:"").trim(),
+      cat:(iCat>=0?r[iCat]:"").trim()
+    })).filter(r=>r.nombre);
+    render(records);
+  }).catch(()=>{
+    document.getElementById('content').innerHTML='<div class="loading">No se pudieron cargar los datos. Verifique que la hoja esté publicada en la web.</div>';
+  });
+}
+load();
+</script>
+</body>
+</html>
